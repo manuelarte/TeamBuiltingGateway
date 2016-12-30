@@ -23,11 +23,15 @@ zuul:
     teams:
       path: /teams/**
       strip-prefix: false
-      url: ${TEAM_SERVICE}
+      url: ${CORE_SERVICE}
     players:
       path: /players/**
       strip-prefix: false
-      url: ${RELATION_SERVICE}
+      url: ${CORE_SERVICE}
+    statistics:
+      path: /statistics/**
+      strip-prefix: false
+      url: ${STATISTICS_SERVICE}
 
 auth0:
   domain: manuelarte.eu.auth0.com
@@ -52,4 +56,6 @@ zuul:
       url: http://localhost:8080/
     players:
       url: http://localhost:8080/
+    statistics:
+      url: http://localhost:8081/
 
