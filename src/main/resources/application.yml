@@ -20,12 +20,8 @@ zuul:
   sensitive-headers:
   prefix: /api
   routes:
-    teams:
-      path: /teams/**
-      strip-prefix: false
-      url: ${CORE_SERVICE}
-    players:
-      path: /players/**
+    core:
+      path: /core/**
       strip-prefix: false
       url: ${CORE_SERVICE}
     statistics:
@@ -56,9 +52,7 @@ spring:
   profiles: development
 zuul:
   routes:
-    teams:
-      url: http://localhost:8080/
-    players:
+    core:
       url: http://localhost:8080/
     statistics:
       url: http://localhost:8081/
