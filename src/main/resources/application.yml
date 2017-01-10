@@ -32,6 +32,10 @@ zuul:
       path: /statistics/**
       strip-prefix: false
       url: ${STATISTICS_SERVICE}
+    experience:
+      path: /experience/**
+      strip-prefix: false
+      url: ${EXPERIENCE_SERVICE}
 
 auth0:
   domain: manuelarte.eu.auth0.com
@@ -58,4 +62,6 @@ zuul:
       url: http://localhost:8080/
     statistics:
       url: http://localhost:8081/
+    experience:
+      url: http://localhost:8082/
 
