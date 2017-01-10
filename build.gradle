@@ -46,9 +46,6 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.springframework.boot:spring-boot-starter-actuator")
 
-    // Security
-    compile('com.auth0:auth0-spring-security-api:0.3.2');
-
     compileOnly("org.projectlombok:lombok")
 
     testCompile("org.springframework.boot:spring-boot-starter-test")
