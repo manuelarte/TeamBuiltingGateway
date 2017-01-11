@@ -17,7 +17,7 @@ endpoints:
 zuul:
   ignore-local-service: false
   ignored-services: '*'
-  sensitive-headers:
+  sensitive-headers: ''
   prefix: /api
   routes:
     core:
