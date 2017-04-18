@@ -37,6 +37,10 @@ zuul:
       path: /experience/**
       strip-prefix: false
       url: ${EXPERIENCE_SERVICE}
+    users:
+      path: /users/**
+      strip-prefix: false
+      url: ${USERS_SERVICE}
 
 ---
 
