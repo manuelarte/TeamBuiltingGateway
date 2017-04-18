@@ -37,11 +37,11 @@ apply plugin: 'maven'
 apply plugin: 'org.sonarqube'
 apply plugin: 'project-report'
 
-org.gradle.api.plugins.quality.Pmd {
+pmd {
     ignoreFailures = true
 }
 
-org.gradle.api.plugins.quality.FindBugs {
+findBugs {
     ignoreFailures = true
     effort = 'max'
 }
@@ -53,7 +53,7 @@ tasks.withType(FindBugs) {
     }
 }
 
-org.gradle.api.plugins.quality.JDepend {
+jDepend {
     ignoreFailures = false
 }
 
@@ -72,7 +72,7 @@ gradleLint {
     Rules += 'unused-exclude-by-dep'
 }
 
-org.gradle.api.tasks.bundling.Jar {
+jar {
     baseName = "${microserviceName}"
     version = project.version
 }
@@ -128,6 +128,6 @@ bootRun {
     }
 }
 
-org.gradle.api.Task stage {
+task stage {
     dependsOn build
 }
