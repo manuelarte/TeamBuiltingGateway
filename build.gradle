@@ -1,34 +1,102 @@
-group 'org.manuel.teambuilting'
-version '0.1.0-SNAPSHOT'
-
 buildscript {
-    ext {
-        springBootVersion = '1.4.1.RELEASE'
-    }
     repositories {
         mavenLocal()
         mavenCentral()
         maven { url "https://repo.spring.io/snapshot" }
         maven { url "https://repo.spring.io/milestone" }
     }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+}
+
+plugins {
+    id 'com.github.ben-manes.versions' version '0.13.0'
+    id 'nebula.contacts' version '3.0.1'
+    id 'nebula.facet' version '3.3.0'
+    id 'nebula.lint' version '6.3.0'
+    id 'org.sonarqube' version '2.2.1'
+    id 'org.springframework.boot' version '1.4.3.RELEASE'
+}
+
+ext {
+    JavaVersion = '1.8'
+    snippetsDir = file('build/generated-snippets')
+}
+
+group 'org.manuel.teambuilting'
+version '0.1.0-SNAPSHOT'
+
+apply plugin: 'build-announcements'
+apply plugin: 'build-dashboard'
+apply plugin: 'idea'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'jacoco'
+apply plugin: 'pmd'
+apply plugin: 'findbugs'
+apply plugin: 'jdepend'
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'org.sonarqube'
+apply plugin: 'project-report'
+
+org.gradle.api.plugins.quality.Pmd {
+    ignoreFailures = true
+}
+
+org.gradle.api.plugins.quality.FindBugs {
+    ignoreFailures = true
+    effort = 'max'
+}
+
+tasks.withType(FindBugs) {
+    reports {
+        xml.enabled = false
+        html.enabled = true
     }
 }
 
-apply plugin: 'java'
-apply plugin: 'spring-boot'
-apply plugin: 'io.spring.dependency-management'
-apply plugin: 'maven'
-apply plugin: 'maven-publish'
-apply plugin: 'idea'
+org.gradle.api.plugins.quality.JDepend {
+    ignoreFailures = false
+}
+
+tasks.withType(JDepend) {
+    reports {
+        text.enabled = false
+        xml.enabled = true
+    }
+}
+
+gradleLint {
+    alwaysRun = false
+    criticalRules += 'archaic-wrapper'
+    criticalRules += 'unused-dependency'
+    Rules += 'duplicate-dependency-class'
+    Rules += 'unused-exclude-by-dep'
+}
+
+org.gradle.api.tasks.bundling.Jar {
+    baseName = "${microserviceName}"
+    version = project.version
+}
+
+contacts {
+    'manuel.doncel.martos@gmail.com' {
+        roles 'developer'
+    }
+}
 
 sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+configurations {
+    agent
+    all {
+        exclude group: 'org.apache.geronimo.specs', module: 'geronimo-jta_1.1_spec'
+    }
+}
 
 repositories {
+    mavenLocal()
+    maven { url 'https://repo.spring.io/milestone' }
     mavenCentral()
-    maven { url "https://repo.spring.io/snapshot" }
-    maven { url "https://repo.spring.io/milestone" }
 }
 
 dependencyManagement {
@@ -52,6 +120,14 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }
 
-task stage {
+bootRun {
+    systemProperties 'user.timezone': 'UTC'
+
+    if (project.hasProperty('jvmArgs')) {
+        jvmArgs = (project.jvmArgs.split('\\s+') as java.util.List)
+    }
+}
+
+org.gradle.api.Task stage {
     dependsOn build
 }
