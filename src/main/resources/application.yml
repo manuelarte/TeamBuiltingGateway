@@ -40,36 +40,6 @@ zuul:
 
 ---
 
-spring:
-  profiles: development
-zuul:
-  debug:
-    request: true
-  routes:
-    teams:
-      path: /teams/**
-      strip-prefix: false
-      url: http://localhost:8090
-    players:
-      path: /players/**
-      strip-prefix: false
-      url: http://localhost:8091
-    sports:
-      path: /sports/**
-      strip-prefix: false
-      url: http://localhost:8092
-    statistics:
-      path: /statistics/**
-      strip-prefix: false
-      url: http://localhost:8081
-    experience:
-      path: /experience/**
-      strip-prefix: false
-      url: http://localhost:8082
-
-
----
-
 auth0:
   domain: manuelarte.eu.auth0.com
   issuer: https://manuelarte.eu.auth0.com/
