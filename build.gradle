@@ -16,11 +16,6 @@ plugins {
     id 'org.springframework.boot' version '1.4.3.RELEASE'
 }
 
-ext {
-    JavaVersion = '1.8'
-    snippetsDir = file('build/generated-snippets')
-}
-
 group 'org.manuel.teambuilting'
 version '0.1.0-SNAPSHOT'
 
@@ -29,47 +24,17 @@ apply plugin: 'build-dashboard'
 apply plugin: 'idea'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'jacoco'
-apply plugin: 'pmd'
-apply plugin: 'findbugs'
-apply plugin: 'jdepend'
 apply plugin: 'java'
 apply plugin: 'maven'
 apply plugin: 'org.sonarqube'
 apply plugin: 'project-report'
 
-pmd {
-    ignoreFailures = true
-}
-
-findBugs {
-    ignoreFailures = true
-    effort = 'max'
-}
-
-tasks.withType(FindBugs) {
-    reports {
-        xml.enabled = false
-        html.enabled = true
-    }
-}
-
-jDepend {
-    ignoreFailures = false
-}
-
-tasks.withType(JDepend) {
-    reports {
-        text.enabled = false
-        xml.enabled = true
-    }
-}
-
 gradleLint {
     alwaysRun = false
     criticalRules += 'archaic-wrapper'
     criticalRules += 'unused-dependency'
-    Rules += 'duplicate-dependency-class'
-    Rules += 'unused-exclude-by-dep'
+    rules += 'duplicate-dependency-class'
+    rules += 'unused-exclude-by-dep'
 }
 
 jar {
@@ -83,8 +48,8 @@ contacts {
     }
 }
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
 
 configurations {
     agent
