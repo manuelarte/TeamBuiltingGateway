@@ -15,15 +15,20 @@ endpoints:
     sensitive: false
 
 zuul:
-  ignore-local-service: false
-  ignored-services: '*'
-  sensitive-headers: ''
-  prefix: /api
+  prefix: /api/v1
   routes:
-    core:
-      path: /core/**
+    teams:
+      path: /teams/**
       strip-prefix: false
-      url: ${CORE_SERVICE}
+      url: ${TEAMS_SERVICE}
+    players:
+      path: /players/**
+      strip-prefix: false
+      url: ${PLAYERS_SERVICE}
+    sports:
+      path: /sports/**
+      strip-prefix: false
+      url: ${SPORTS_SERVICE}
     statistics:
       path: /statistics/**
       strip-prefix: false
@@ -32,6 +37,38 @@ zuul:
       path: /experience/**
       strip-prefix: false
       url: ${EXPERIENCE_SERVICE}
+
+---
+
+spring:
+  profiles: development
+zuul:
+  debug:
+    request: true
+  routes:
+    teams:
+      path: /teams/**
+      strip-prefix: false
+      url: http://localhost:8090
+    players:
+      path: /players/**
+      strip-prefix: false
+      url: http://localhost:8091
+    sports:
+      path: /sports/**
+      strip-prefix: false
+      url: http://localhost:8092
+    statistics:
+      path: /statistics/**
+      strip-prefix: false
+      url: http://localhost:8081
+    experience:
+      path: /experience/**
+      strip-prefix: false
+      url: http://localhost:8082
+
+
+---
 
 auth0:
   domain: manuelarte.eu.auth0.com
@@ -45,17 +82,4 @@ auth0:
   signingAlgorithm: HS256
   #signingAlgorithm: RS256
   #publicKeyPath: certificate/cert.pem
-
----
-
-spring:
-  profiles: development
-zuul:
-  routes:
-    core:
-      url: http://localhost:8080/
-    statistics:
-      url: http://localhost:8081/
-    experience:
-      url: http://localhost:8082/
 
