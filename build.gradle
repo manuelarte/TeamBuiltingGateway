@@ -13,7 +13,7 @@ plugins {
     id 'nebula.facet' version '3.3.0'
     id 'nebula.lint' version '6.3.0'
     id 'org.sonarqube' version '2.2.1'
-    id 'org.springframework.boot' version '1.4.3.RELEASE'
+    id 'org.springframework.boot' version '1.5.3.RELEASE'
 }
 
 group 'org.manuel.teambuilting'
@@ -73,16 +73,16 @@ dependencyManagement {
 dependencies {
 
     // Gateway libraries
-    compile("org.springframework.cloud:spring-cloud-starter-zuul")
+    compile 'org.springframework.cloud:spring-cloud-starter-zuul'
 
-    compile('javax.inject:javax.inject:1')
-    compile("org.springframework.boot:spring-boot-starter-web")
-    compile("org.springframework.boot:spring-boot-starter-actuator")
+    compile 'javax.inject:javax.inject:1'
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    compile 'org.springframework.boot:spring-boot-starter-actuator'
 
-    compileOnly("org.projectlombok:lombok")
+    compileOnly 'org.projectlombok:lombok'
 
-    testCompile("org.springframework.boot:spring-boot-starter-test")
-    testCompile group: 'junit', name: 'junit', version: '4.11'
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
+    testCompile 'junit:junit:4.12'
 }
 
 bootRun {
